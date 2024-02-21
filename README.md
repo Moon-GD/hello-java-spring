@@ -2,7 +2,9 @@
 
 ## Hello World 프로젝트 jar로 압축하고, 자바 환경에서 실행하기
 - IntelliJ gradle 텝에서 `bootJar` 파일 확인
-- 이미지 삽입
+
+<img width="303" alt="bootJar 위치" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/f9ab2177-053d-41f9-8b12-7c621b97b4b4">
+
 - 파일 실행하면 프로젝트 `build/libs` 하위에 jar 확장자를 가진 파일이 생성된 것을 확인 가능
 
 ```shell
