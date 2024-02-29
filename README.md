@@ -29,9 +29,10 @@ $ brew info maridb
 
 - 프로그램 실행 후 아래와 같이 기입...
 
-- 사진 첨부하기
+<img width="456" alt="스크린샷 2024-02-29 오후 8 26 21" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/03daa019-3ec2-4316-976b-642fef3f94c4">
 
-- 그리고 Connect 시도하면 connection error가 발생!
+
+- 그리고 Connect 시도하면 `connection error`가 발생!
 - macOS에서 mysql.user 테이블을 살펴보면 'root' 사용자에 대한 password가 비어있음 → <a href="https://madplay.github.io/post/mysql-change-root-password-error">먼저 삽질한 분의 블로그</a>
 - 그래서 아래와 같은 방식으로 사용하고자 하는 사용자 계정에 password 발급!
 
@@ -57,7 +58,9 @@ DROP USER 'user name'@'db host';
 
 - 이후 connection 시도하면...
 
-- 사진 첨부!
+<img width="1892" alt="스크린샷 2024-02-29 오후 8 39 45" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/e603d3b0-5bf6-4613-9373-692e18b8b2de">
+
+- 빈 화면이 이렇게 좋기는 오랜만이다... 😭😭
 
 <hr />
 
