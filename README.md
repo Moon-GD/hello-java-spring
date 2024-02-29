@@ -61,4 +61,4 @@ DROP USER 'user name'@'db host';
 
 <hr />
 
-#### updated: 2024.02.24 (Sat)
+#### updated: 2024.02.29 (Thr)
