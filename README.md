@@ -81,6 +81,41 @@ SHOW GRANTS;
 SHOW GRANTS FOR '사용자 이름'@'호스트';
 ```
 
+### 5️⃣ Spring Data JPA를 이용하는 프로젝트의 생성
+
+- 위에서 설정해준 MariaDB와 연결해주기 위한 스프링 프로젝트 생성
+- 책과 같이 Spring Initilaizr에서 아래의 의존성을 추가
+  - Spring Boot DevTools
+  - Lombok
+  - Spring Web
+  - Spring Data JPA
+  - MariaDB Driver
+
+- 이후, 메인 메서드를 실행해보면 에러 발생!
+
+```shell
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+Reason: Failed to determine a suitable driver class
+```
+
+- 에러 요약: 스프링 부트의 Auto Configuration으로 의존성은 추가해주었으나, MariaDB 드라이버의 datasource url이 작성되지 않아서 발생
+- 이를 해결하기 위해서는 아래의 2가지 설정이 필요
+
+| 필요한 설정 | 내용 |
+|:-|:-|
+| Spring 프로젝트에서 바라볼 JDBC 드라이버 (현재는 MariaDB 전용 JDBC 드라이버) | - Spring Initializr로 의존성 추가해주면서 자동으로 설정됨<br/> - 혹시나 설정이 필요하다면 <a href="https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client">maven 공식 문서</a>가서 필요한 설정 가져오기! |
+| MariaDB JDBC 드라이버를 위한 설정 | - 드라이버 이름, 주소, 계정 정보 <br/> - 일반적으로 드라이버의 설정 파일 작성은 application.properties나 별도의 YAML파일을 두어서 관리! |
+
+- `application.properties`에 추가해 준 내용
+```
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/bootex
+spring.datasource.username=bootuser
+spring.datasource.password=bootuser
+```
+
 <hr />
 
 #### updated: 2024.03.03 (Sun)
