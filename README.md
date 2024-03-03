@@ -150,6 +150,72 @@ spring.datasource.password=bootuser
 - 흐름을 정리하면...
 - Spring Data JPA ↔ Hibernates ↔ JDBC ↔ DB 
 
+<br />
+
+## 2.4 엔티티 클래스와 JpaRepository
+
+- Spring Data JPA 사용 방식을 살펴보기 위해서 간단한 메모 예제 진행
+- Memo 클래스 정의
+
+```java
+// project/entity/Memo.class
+
+@Entity  // Spring Data JPA에게 해당 클래스가 엔티티 클래스임을 알려주는 것
+@Table(name="tbl_memo")  // DB 테이블의 이름, 인덱스, 스키마 등 지정
+@ToString  // lombok에서 자동으로 생성해주는 toString 메서드 활용을 위함
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Memo {
+    
+    @Id  // 테이블의 PK로 사용되는 멤버 변수임을 명시
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // PK 생성 전략 명시
+    private Long mno;
+}
+```
+
+- @GenerationType의 키 생성 방식
+
+| 값              | 내용                                                                                                 |
+|:---------------|:---------------------------------------------------------------------------------------------------|
+| AUTO (default) | Hibernates에게 생성 방식을 결정하도록 위임                                                                       |
+| IDENTITY       | 사용하게 되는 DB의 키 생성 방식 활용<ul><li>Oracle: 별도 시퀀스 관리</li><li> MySQL, MariaDB : auto increment</li></ul> |
+| SEQUENCE       | 데이터베이스의 sequence를 이용 <br /> @SequenceGenreator와 같이 사용                                              |
+| TABLE          | 키 전용 생성 테이블을 생성해서 키 생성 <br /> @TableGenreator와 같이 사용                                               |
+
+- 어노테이션 설명
+  - 1️⃣ `@Builder`
+    - 객체를 생성할 때 빌더 패턴을 사용하여 가독성을 높일 수 있도록 빌더를 생성하는 메서드를 자동 생성
+    - 객체 생성이기 때문에 자연스럽게 생성자 관련 어노테이션을 함께 작성해주지 않는다면, 컴파일 에러 발생
+    
+    ```java
+      User user = new User.builder().age(27).name('moon').build();
+    ```
+
+  - 2️⃣ `@NoArgsConstructor`, `@AllArgsConstructor`
+    - 생성자 메서드를 자동으로 생성
+  
+    ```java
+        public class User {
+            int age;
+            String name;
+    
+            // @NoArgsConstructor 사용은 아래와 같다
+            public User() {}
+            
+            // @AllArgsConstructor 사용은 아래와 같다
+            public User(int age, String name) {
+                this.age = age;
+                this.name = name;
+            }
+        }
+    ```
+    
+  - 3️⃣ `@Getter`
+    - 클래스의 멤버 변수에 대해서 getter 메서드를 자동으로 생성
+    
+
 <hr />
 
 #### updated: 2024.03.03 (Sun)
