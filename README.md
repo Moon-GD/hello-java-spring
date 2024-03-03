@@ -8,6 +8,8 @@
 ### 1️⃣ GUI 기반
 - <a href="https://mariadb.org/">공식 홈페이지</a>로!
 
+<br />
+
 ### 2️⃣ CLI (feat. homebrew)
 ```bash
 # 1. brew 최신화
@@ -24,6 +26,8 @@ $ brew info maridb
 - 편의성 상승을 위해 GUI 프로그램 설치
     - Windows 환경에서는 `HeidiSQL` 사용하면 되는데, macOS에서는 지원을 안하는 것으로 보임 ㅇㅅㅇ
     - 그래서 `sequel ace` <a href="https://www.sequelpro.com/">다운로드</a>
+
+<br />
 
 ### 3️⃣ Sequel Ace 연결
 
@@ -62,6 +66,8 @@ DROP USER 'user name'@'db host';
 
 - 빈 화면이 이렇게 좋기는 오랜만이다... 😭😭
 
+<br />
+
 ### 4️⃣ 신규 DB 및 사용자 계정 설정
 
 - GUI 환경의 경우 DB 생성 버튼을 통해, CLI에서는 아래의 쿼리로 DB 생성!
@@ -81,7 +87,11 @@ SHOW GRANTS;
 SHOW GRANTS FOR '사용자 이름'@'호스트';
 ```
 
-### 5️⃣ Spring Data JPA를 이용하는 프로젝트의 생성
+<br />
+
+## 2.2 Spring Data JPA를 이용하는 프로젝트의 생성
+
+### 1️⃣ 프로젝트 생성
 
 - 위에서 설정해준 MariaDB와 연결해주기 위한 스프링 프로젝트 생성
 - 책과 같이 Spring Initilaizr에서 아래의 의존성을 추가
@@ -116,7 +126,30 @@ spring.datasource.username=bootuser
 spring.datasource.password=bootuser
 ```
 
+<br />
+
+## 2.3 Spring Data JPA의 소개
+
+### 1️⃣ ORM & JPA
+
+- ORM 개념의 등장
+- `객체 지향 구조`가 `관계형 데이터베이스`와 비슷하다는 데에서 착안된 개념
+
+|           | 객체 지향 구조                        | 관계형 데이터베이스                     |
+|:----------|:--------------------------------|:-------------------------------|
+| 데이터 설계는   | class 설계                        | table 설계                       |
+| 데이터 구현체   | instance: 행위와 값을 지닌 객체 (object) | row: 칼럼에 알맞은 값을 가진 개체 (entity) |
+| 데이터 표현 방식 | instance 간의 참조를 통해서             | table간의 관계를 통해서                |
+
+- 여기서, 객체 지향을 관계형 데이터베이스에 맞추어 처리해주는 기법을 고안하게 되었고 이것이 ORM을 일컫는다
+- ORM은 특정 언어나 데이터베이스의 종류에 국한되는 것이 아니라 **객체 지향과 관계형 사이의 변환 기법**을 의미
+- 이 중, JPA는 Java에 맞게 사용되는 스펙이며 해당 스펙을 구현하는 회사마다 프레임워크의 이름이 달라짐 (Hibernates, Eclipselink ...)
+  - 스프링 부트는 `Hibernates`를 이용
+  - 프로젝트 생성할 때 추가해준 `Spring Data JPA`는 스프링 부트에서 Hibernates를 쉽게 이용할 수 있도록 API 제공
+
+- 흐름을 정리하면...
+- Spring Data JPA ↔ Hibernates ↔ JDBC ↔ DB 
+
 <hr />
 
 #### updated: 2024.03.03 (Sun)
-
