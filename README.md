@@ -62,6 +62,25 @@ DROP USER 'user name'@'db host';
 
 - 빈 화면이 이렇게 좋기는 오랜만이다... 😭😭
 
+### 4️⃣ 신규 DB 및 사용자 계정 설정
+
+- GUI 환경의 경우 DB 생성 버튼을 통해, CLI에서는 아래의 쿼리로 DB 생성!
+
+```mysql
+# DB 생성
+CREATE DATABASE bootex;
+
+# 혹시나 권한이 없다고 뜬다면, 해당 유저에게 권한을 먼저 부여
+# 필요에 따라 `WITH GRANT OPTION`도 함께 부여
+GRANT ALL PRIVILEGES ON *.* TO '사용자 이름'@'호스트' WITH GRANT OPTION;
+
+# 권한 확인
+SHOW GRANTS;
+
+# 혹은 특정 유저의 권한 확인
+SHOW GRANTS FOR '사용자 이름'@'호스트';
+```
+
 <hr />
 
-#### updated: 2024.02.29 (Thr)
+#### updated: 2024.03.03 (Sun)
