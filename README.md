@@ -251,6 +251,18 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 }
 ```
 
+### 기획 구현 사항
+
+| 작업 구분  | 명세                         | CRUD 구분 |
+|:-------|:---------------------------|:--------|
+| insert | save(엔티티)                  | C       |
+| select | findById(키), getOne(키)     | R       |
+| update | save(엔티티)                  | U       |
+| delete | deleteById(키), delete(엔티티) | D       |
+
+- JPA에는 `EntityManager`가 엔티티를 DB에 접근하고 관리하는 방식이 정의됨
+- `Entity Manager`가 메모리 상에서 객체를 비교하고 없다면 추가, 존재한다면 수정하는 방식으로 동작하기 때문에 C와 U 작업에 대해 동일한 save 명세가 붙은 것!
+
 <hr />
 
 #### updated: 2024.03.04 (Mon)
