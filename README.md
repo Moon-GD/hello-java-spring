@@ -216,6 +216,25 @@ public class Memo {
     - 클래스의 멤버 변수에 대해서 getter 메서드를 자동으로 생성
     
 
+- JPA를 사용함에 따라 발생하는 SQL 확인을 위해 `application.properties`에 아래의 내용 추가
+
+```properties
+# 애플리케이션이 시작될 때 엔티티 클래스에 따라 데이터베이스의 테이블을 만들거나 수정하도록
+## 테이블이 존재하지 않는다면? 생성
+## 엔티티 클래스의 변화가 감지되었다면? 테이블의 구조 변경
+## 다만, 기존 데이터는 유지 + 추가된 column에 대한 데이터는 데이터베이스의 기본 설정을 따른다 (대부분, null 삽입)
+spring.jpa.hibernate.ddl-auto=update
+
+# Hibernates가 발생시키는 sql을 포맷팅시켜서 출력
+spring.jpa.properties.hibernate.format_sql=true
+
+# JPA 처리 시에 발생하는 SQL을 보여주도록 명시
+spring.jpa.show-sql=true
+```
+
+- 애플리케이션을 실행하면 아래의 console 확인 가능!
+- 사진 첨부하기
+
 <hr />
 
-#### updated: 2024.03.03 (Sun)
+#### updated: 2024.03.04 (Mon)
