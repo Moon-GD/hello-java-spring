@@ -235,6 +235,22 @@ spring.jpa.show-sql=true
 - 애플리케이션을 실행하면 아래의 console 확인 가능!
 <img width="400" alt="hibernates ddl update 사진" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/e7fd4ed4-8dfb-4005-bfff-8f4425df519c">
 
+### JPA 활용
+- Spring Data JPA를 의존성으로 추가하며 JPA 관련 작업을 별도 코드 없이 처리할 수 있음
+- 제공되는 `JpaRepository`를 상속하는 인터페이스를 선언하기만 하면, 스프링 부트에서 CRUD, Paging, Sort 등을 구현한 스프링 빈을 등록!
+  - 참고로 상속 순서는 다음과 같다
+  - Repository → CrudRepository → PagingAndSortRepository → JpaRepository
+ 
+- JpaRepository를 확장한 인터페이스를 선언할 때는 엔티티와 @Id의 타입 정보를 전달해야 함
+
+```java
+// project/repository/MemoRepository.java
+
+// <엔티티, @Id> 전달
+public interface MemoRepository extends JpaRepository<Memo, Long> {
+}
+```
+
 <hr />
 
 #### updated: 2024.03.04 (Mon)
