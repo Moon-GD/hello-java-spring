@@ -233,7 +233,7 @@ spring.jpa.show-sql=true
 ```
 
 - 애플리케이션을 실행하면 아래의 console 확인 가능!
-- 사진 첨부하기
+<img width="400" alt="hibernates ddl update 사진" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/e7fd4ed4-8dfb-4005-bfff-8f4425df519c">
 
 <hr />
 
