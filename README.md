@@ -251,7 +251,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 }
 ```
 
-### 기획 구현 사항
+### JPA Repository 지원 기능 (feat. CrudRepository 기능 활용해보기)
 
 | 작업 구분  | 명세                         | CRUD 구분 |
 |:-------|:---------------------------|:--------|
@@ -263,6 +263,23 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
 - JPA에는 `EntityManager`가 엔티티를 DB에 접근하고 관리하는 방식이 정의됨
 - `Entity Manager`가 메모리 상에서 객체를 비교하고 없다면 추가, 존재한다면 수정하는 방식으로 동작하기 때문에 C와 U 작업에 대해 동일한 save 명세가 붙은 것!
 
+- ※ 참고 ※
+
+- findById, getOne 비교
+
+  | 메소드명        | 반환 값                     | 탐색 실패할 때 상황                | 참고         | 
+  |:------------|:-------------------------|:---------------------------|:-----------|
+  | findById(키) | DB에서 조회된 실제 엔티티          | Optional.empty() 반환        |            |
+  | getOne(키)   | 엔티티에 대한 참조값을 포함하는 프록시 객체 | EntityNotFoundException 반환 | deprecated |
+
+- deleteById, delete 비교
+
+  | 메소드명          | 반환 값 | 탐색 실패할 때 상황                       | 참고                                                       | 
+    |:--------------|:-----|:----------------------------------|:---------------------------------------------------------|
+  | deleteById(키) | void | EmptyResultDataAccessException 발생 | 내부에 delete가 사용됨 <br/> 로직: 삭제하고자 하는 데이터 조회 → delete(키) 호출 |
+  | delete(키)     | void | 아무 일도 일어나지 않는다                    |                                                          |
+
+
 <hr />
 
-#### updated: 2024.03.04 (Mon)
+#### updated: 2024.03.09 (Sat)
