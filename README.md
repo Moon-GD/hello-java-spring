@@ -360,7 +360,7 @@ public void pageAndSortTest() {
 | `@Transactional` | 테스트 코드에 포함된 Jpa 관련 코드를 트랜잭션에 포함시킴 |
 | `@Commit`        | 트랜잭션 내용을 반영시키는 역할                 |
 
-- 실제로, 동일한 테스트 코드에 대해서 @Commit 포함 여부에 따라 DB 반영 여부가 달라짐을 확인할 수 있었다
+- 실제로, 동일한 테스트 코드에 대해서 @Commit 포함 여부에 따라 DB 반영 여부가 달라짐
   - `@Commit` 작성: 실제 DB에 반영
     - <img width="250" alt="@Commit 포함" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/355c1de8-8777-4a8f-8118-1e4eec5cbe05" />
   - `@Commit` 제거: 테스트 코드 롤백으로 실제 DB에 반영 ❌
