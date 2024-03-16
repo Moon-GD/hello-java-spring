@@ -280,6 +280,62 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
   | delete(키)     | void | 아무 일도 일어나지 않는다                    |                                                          |
 
 
+## 2.5 페이징 / 정렬 처리하기
+
+### 스프링에서 DB와 소통하는 방법
+
+- Hibernates 내부 `Dialect`를 통해 직접 query를 작성하지 않고도 원하는 DB와 소통 가능 → DB 종류에 따라 개발자가 별도 학습을 해야하는 수고로움을 덜어줌!
+- JPA는 상위 레포지토리 `PagingAndSortRepository`의 메소드 findAll()을 통해 페이징과 정렬을 처리
+- findAll() 메소드는 Page, PageRequest, Sort 객체와 엮여있음
+
+### 페이징 처리하기
+
+```java
+// MemoRepositoryTests.java의 일부
+
+import java.awt.print.Pageable;
+
+@Test
+public void pageTest() {
+  Pageable pageable = PageRequest.of(0, 10);
+  Page<Memo> memoPage = memoRepository.findAll(pageable);
+
+  System.out.println("memoPage: ", memoPage);  // memoPage: Page 1 of 10 containing com.hellospring.ex2.entity.Memo instances
+}
+```
+
+```java
+Page<Memo> memoPage = memoRepository.findAll(pageable);
+```
+
+- 위의 코드가 흥미로운 이유는, Page 타입으로 반환이 되기 때문!
+- Page 타입은 엔티티의 리스트를 담아오는 것뿐만 아니라, 전체 데이터의 개수도 포함해서 가져옴
+- 그리고 Page 타입은 아래를 포함한 여러 메소드를 지원한다
+
+| 메소드명               | 내용             |
+|:-------------------|:---------------|
+| getTotalElements() | 전체 엔티티 반환      |
+| getTotalPages()    | 전체 페이지 수 반환    |
+| getSize()          | 페이지별 데이터 개수 출력 |
+| hasNext()          | 다음 페이지 존재 여부   |
+| isFirst()          | 첫 번째 페이지 여부    |
+
+### 정렬 처리하기
+
+- 페이징 처리에 Sort 객체를 통해 정렬 정보를 전달
+
+```java
+// Page And Sort 예시
+
+@Test
+public void pageAndSortTest() {
+  Sort sort = Sort.by("id").descending();
+  Pageable pageable = PageRequest.of(0, 10, sort);  // 정렬 객체 정보를 함께 전달
+  
+  Page<Memo> memoPage = memoRepository.findAll(pageable);
+}
+```
+
 <hr />
 
-#### updated: 2024.03.09 (Sat)
+#### updated: 2024.03.16 (Sat)

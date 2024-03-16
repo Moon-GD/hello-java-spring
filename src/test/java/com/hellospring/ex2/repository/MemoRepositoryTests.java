@@ -5,6 +5,10 @@ import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.Random;
@@ -16,7 +20,14 @@ public class MemoRepositoryTests {
     @Autowired
     MemoRepository memoRepository;
 
+    // CRUD Variable
     int TEST_DATA_LENGTH = 100;
+
+    // Paging And Sort Variables
+    int PAGE_START = 0;
+    int PAGE_SIZE = 10;
+
+    // CRUD Test
 
     @Test
     public void createDummies() {
@@ -66,5 +77,39 @@ public class MemoRepositoryTests {
     @Test
     public void deleteAllDummies() {
         memoRepository.deleteAll();
+    }
+
+    // Paging And Sort Test
+    @Test
+    public void pageTest() {
+        Pageable pageable = PageRequest.of(PAGE_START, PAGE_SIZE);
+        Page<Memo> memoPage = memoRepository.findAll(pageable);
+
+        // 전체 엔티티 정보 출력
+        System.out.println("getTotalElements(): " + memoPage.getTotalElements());
+
+        // 전체 페이지 개수 출력
+        System.out.println("getTotalPages(): " + memoPage.getTotalPages());
+
+        // 페이지별 데이터의 개수 출력
+        System.out.println("getSize(): " + memoPage.getSize());
+
+        // 다음 페이지 존재 여부 출력
+        System.out.println("hasNext(): " + memoPage.hasNext());
+
+        // 첫 번째 페이지 여부 출력
+        System.out.println("isFirst(): " + memoPage.isFirst());
+    }
+
+    @Test
+    public void PageAndSortTest() {
+        Sort sortById = Sort.by("mno").ascending();
+        Sort sortByText = Sort.by("memoText").descending();
+        Sort sortInfo = sortById.and(sortByText);
+        Pageable pageable = PageRequest.of(PAGE_START, PAGE_SIZE, sortInfo);
+
+        Page<Memo> sortedMemoPage = memoRepository.findAll(pageable);
+
+        sortedMemoPage.getContent().forEach(System.out::println);
     }
 }
