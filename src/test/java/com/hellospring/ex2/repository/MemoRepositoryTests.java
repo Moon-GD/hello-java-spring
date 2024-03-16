@@ -9,10 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 @SpringBootTest
@@ -111,5 +113,26 @@ public class MemoRepositoryTests {
         Page<Memo> sortedMemoPage = memoRepository.findAll(pageable);
 
         sortedMemoPage.getContent().forEach(System.out::println);
+    }
+
+    // Query Test
+    @Test
+    public void queryMethodTest() {
+        List<Memo> memos = memoRepository.getMemosByMemoTextContaining(4L);
+        memos.forEach(System.out::println);
+    }
+
+    @Test
+    public void sortedQueryMethodTest() {
+        Pageable pageable = PageRequest.of(PAGE_START, PAGE_SIZE, Sort.by("mno").ascending());
+        List<Memo> memos = memoRepository.getMemosByMemoTextContaining(4L, pageable);
+        memos.forEach(System.out::println);
+    }
+
+
+    @Transactional
+    @Test
+    public void queryMethodDeleteTest() {
+        memoRepository.deleteByMnoGreaterThan(0L);
     }
 }
