@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,7 +129,6 @@ public class MemoRepositoryTests {
         List<Memo> memos = memoRepository.getMemosByMemoTextContaining(4L, pageable);
         memos.forEach(System.out::println);
     }
-
 
     @Transactional
     @Test

@@ -163,7 +163,6 @@ spring.datasource.password=bootuser
 @Entity  // Spring Data JPA에게 해당 클래스가 엔티티 클래스임을 알려주는 것
 @Table(name="tbl_memo")  // DB 테이블의 이름, 인덱스, 스키마 등 지정
 @ToString  // lombok에서 자동으로 생성해주는 toString 메서드 활용을 위함
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -367,6 +366,57 @@ public void pageAndSortTest() {
     - <img width="250" alt="@Commit 제거" src="https://github.com/Moon-GD/hello-java-spring/assets/74173976/5247a4ec-1e71-41ff-bdd2-71936407d714" />
 
 
+### 2.6.2 @Query 어노테이션
+- 복잡한 DB 작업을 수행하기에 쿼리 메소드 방식은 불편할 때가 종종 발생!
+- 일반적으로, 단순 작업 → 쿼리 메소드, 복잡한 작업 → @Query 어노테이션을 활용한다
+- 처음에 이해한 내용이라면 SQL문을 그대로 사용한다고 생각했었는데...
+  - 그건 아니고, JPQL(Java Persistence Query Language)를 활용
+  - DB에서 관계형 테이블 및 column을 활용하여 쿼리를 작성하는 것이 아니라, `@Entity` 객체와 해당 객체의 멤버 변수를 사용한다는 점이 다름
+  - 익숙한 SQL 문법 모두 동일하게 활용 가능 (avg(), count(), group by, order by, ...)
+
+- `JpaRepository` 확장한 repository에 아래와 같이 `@Query` 활용 가능 
+
+```java
+// MemoRepository.java
+// 기본
+@Query("SELECT m from Memo m ORDER BY m.mno DESC")
+List<Memo> getMemosByDesc();
+
+// 파라미터 활용
+@Query("UPDATE Memo m set m.memoText = :memoText WHERE m.mno = :mno")
+int updateMemoText(@Param("mno") Long mno, @Param("memoText") String memoText);
+
+// 객체 활용한 파라미터 바인딩
+@Query("UPDATE Memo m set m.memoText = :#{#memoObj.memoText} WHERE m.mno = :#{#memoObj.mno}")
+int updateMemoTextUsingMemoObj(@Param("memoObj") Memo memo);
+```
+
+- 페이징을 처리하는 방식은, `@Query` 내부 countQuery에 쿼리를 하나 더 전달하는 방식으로 전체 개수를 가져옴
+
+```java
+// MemoRepository.java
+@Query(value = "SELECT m FROM Memo m WHERE m.mno > :mno",
+    countQuery = "SELECT count(m) FROM Memo m WHERE m.mno > :mno")
+Page<Memo> getMemosUsingAnnotation(Long mno, Pageable pageable);
+```
+
+- 추가로, `@Query`는 조금 더 유연한게, ORM에 사용되는 객체 이외에도 Object[]를 통해 반환 값을 설정할 수 있다
+
+```java
+// MemoRepository.java
+@Query(value = "SELECT m.mno, m.memoText, current_date FROM Memo m WHERE m.mno > :mno",
+    countQuery = "SELECT count(m) FROM Memo m WHERE m.mno > :mno")
+Page<Object[]> getMemosWithTime(Long mno, Pageable pageable);
+```
+
+- 마지막으로, @Query의 속성 중 `nativeQuery` = true를 설정함으로써, DB 자체 SQL 문법을 바로 활용하는 것도 가능하다
+
+```java
+// MemoRepository.java
+@Query(value = "SELECT * FROM tbl_memo WHERE mno > 0", nativeQuery = true)
+Page<Memo[]> getMemosWithMariaSQL();
+```
+
 <hr />
 
-#### updated: 2024.03.16 (Sat)
+#### updated: 2024.03.25 (Mon)
