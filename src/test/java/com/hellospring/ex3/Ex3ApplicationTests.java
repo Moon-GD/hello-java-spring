@@ -1,10 +1,10 @@
-package com.hellospring.ex2;
+package com.hellospring.ex3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Ex2ApplicationTests {
+class Ex3ApplicationTests {
 
     @Test
     void contextLoads() {
