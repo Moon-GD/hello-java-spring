@@ -44,6 +44,29 @@ public class SampleController {
 </html>
 ```
 
+## 3.2 Thymeleaf의 기본 사용법
+
+### 1️⃣ DTO 구성
+- Thymeleaf 템플릿 예제에 필요한 샘플 DTO 구성
+
+```java
+// dto/SampleDto
+
+@Data  // lombok 어노테이션으로, getter/setter, toString(), equals() 등을 자동으로 생성
+@Builder(toBuilder = true)  // toBuilder: 빌더 패턴으로 생성된 객체를 활용하여 새로운 객체를 구성할 수 있도록 설정
+public class SampleDto {
+    private Long sno;
+
+    private String first;
+
+    private String last;
+
+    private LocalDateTime regTime;
+}
+```
+
+- TODO: 템플릿 파일 구성한 부분부터 정리 다시하기
+
 <hr />
 
 #### updated: 2024.03.26 (Tue)
