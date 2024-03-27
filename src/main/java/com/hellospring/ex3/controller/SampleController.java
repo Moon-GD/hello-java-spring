@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +24,8 @@ public class SampleController {
         return "sample/ex1";
     }
 
-    @GetMapping("ex2")
-    public String ex2(Model model) {
+    @GetMapping({"/ex2", "/exLink"})
+    public void ex2(Model model) {
         log.info("ex2.....");
 
         List<SampleDto> list = LongStream.rangeClosed(1, 20).mapToObj(
@@ -37,7 +38,27 @@ public class SampleController {
         ).toList();
 
         model.addAttribute("list", list);
+    }
 
-        return "sample/ex2";
+    @GetMapping("/exInline")
+    public String exInline(RedirectAttributes redirectAttributes) {
+        log.info("exInline.....");
+
+        SampleDto sampleDto = SampleDto.builder().
+                sno(100L).
+                first("First...").
+                last("Last...").
+                regTime(LocalDateTime.now()).
+                build();
+
+        redirectAttributes.addFlashAttribute("result", "success");
+        redirectAttributes.addFlashAttribute("dto", sampleDto);
+
+        return "redirect:/sample/ex3";
+    }
+
+    @GetMapping("/ex3")
+    public void ex3() {
+        log.info("ex3.....");
     }
 }

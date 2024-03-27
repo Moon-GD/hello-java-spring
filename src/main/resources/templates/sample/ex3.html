@@ -5,13 +5,18 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ex2</title>
+    <title>ex3</title>
 </head>
 <body>
-    <ul>
-        <li th:each="dto, state: ${list}" th:if="${dto.getSno() % 5 == 0}">
-            [[${state.index}]] --- [[${dto}]]
-        </li>
-    </ul>
+    <th:block th:text="${result}"/>
+    <th:block th:text="${dto}"/>
+
+    <script>
+        const msg = [[${result}]];
+        const dto = [[${dto}]];
+
+        console.log("msg: ", msg);
+        console.log("dto: ", dto);
+    </script>
 </body>
 </html>

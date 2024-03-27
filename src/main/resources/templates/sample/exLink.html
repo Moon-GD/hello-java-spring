@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>exLink</title>
+</head>
+<body>
+    <ul>
+        <!-- query string 방식-->
+        <h1 th:text="${'query string 방식'}"/>
+        <li th:each="dto: ${list}">
+            <a th:href="@{/sample/someHtmlURL(sno=${dto.getSno()})}">[[${dto}]]</a>
+        </li>
+
+        <!-- segment 방식-->
+        <h1 th:text="${'segment 방식'}"/>
+        <li th:each="dto: ${list}">
+            <a th:href="@{/sample/someHtmlURL/{sno}(sno = ${dto.getSno()})}">[[${dto}]]</a>
+        </li>
+    </ul>
+</body>
+</html>
