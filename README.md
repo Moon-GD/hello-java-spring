@@ -235,6 +235,10 @@ public String ex2(Model model) {}
 </html>
 ```
 
+## 3.3 Thymeleaf의 기본 객체와 LocalDateTime
+
+- 정리 예정
+
 <hr />
 
 #### updated: 2024.03.27 (Wed)
